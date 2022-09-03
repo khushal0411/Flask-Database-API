@@ -20,8 +20,8 @@ def predict():
     name = request.form.get("name")
     maths = request.form.get("maths")
     sci = request.form.get("sci")
-    List = [0,name,maths,sci]
-    with open('data.csv', 'a') as f_object:
+    List = [name,maths,sci]
+    with open('data.csv', 'a', newline= '') as f_object:
 
         writer_object = writer(f_object)
         writer_object.writerow(List)
@@ -30,6 +30,15 @@ def predict():
         df1 = pd.read_csv('data.csv')
     return df1.to_json(orient='records')
 
+@app.route("/delete", methods=['POST'])
+def d():
+    name = str(request.form.get("name"))
+    df1 = pd.read_csv('data.csv')
+    df1= df1[df1.Name!=name]
+    print(df1)
+    df1.to_csv('data.csv',mode='w',index=False)
+    df = pd.read_csv('data.csv')
+    return df1.to_json(orient='records')
 
 if __name__ == "__main__":
     app.run(debug=True)
