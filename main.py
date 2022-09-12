@@ -1,18 +1,21 @@
 import pandas as pd
 from csv import writer
+from pandasql import sqldf
 import csv
 from flask import Flask, request, jsonify
 
 
 df1= pd.read_csv('data.csv')
 print(df1.to_json(orient='records'))
+mysql = lambda q: sqldf(q, globals())
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-    return "Home"
+    df2=mysql("SELECT * FROM df1 WHERE Name='ali';")
+    return df2.to_json(orient='records')
 
 
 @app.route("/predict", methods=['POST'])
@@ -38,7 +41,9 @@ def d():
     print(df1)
     df1.to_csv('data.csv',mode='w',index=False)
     df = pd.read_csv('data.csv')
-    return df1.to_json(orient='records')
+    #return df1.to_json(orient='records')
+    return mysql("SELECT * FROM data;")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
