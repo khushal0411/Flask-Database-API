@@ -44,6 +44,17 @@ def d():
     #return df1.to_json(orient='records')
     return mysql("SELECT * FROM data;")
 
+@app.route("/data_delete/org", methods=['POST'])
+def d():
+    name = str(request.form.get("name"))
+    df1 = pd.read_csv('data1.csv')
+    df1= df1[df1.Name!=name]
+    print(df1)
+    df1.to_csv('data.csv',mode='w',index=False)
+    df = pd.read_csv('data.csv')
+    #return df1.to_json(orient='records')
+    return mysql("SELECT * FROM data1;")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
