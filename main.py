@@ -17,6 +17,12 @@ def home():
     df2=mysql("SELECT * FROM df1 WHERE Name='ali';")
     return df2.to_json(orient='records')
 
+@app.route('/getdata')
+def home():
+    df2=mysql("SELECT * FROM df1 WHERE Name='ali';")
+    return df2.to_json(orient='records')
+
+
 
 @app.route("/predict", methods=['POST'])
 def predict():
