@@ -18,20 +18,7 @@ def home():
     return df2.to_json(orient='records')
 
 
-@app.route("/predict", methods=['POST'])
-def predict():
-    name = request.form.get("name")
-    maths = request.form.get("maths")
-    sci = request.form.get("sci")
-    List = [name,maths,sci]
-    with open('data.csv', 'a', newline= '') as f_object:
 
-        writer_object = writer(f_object)
-        writer_object.writerow(List)
-
-        f_object.close()
-        df1 = pd.read_csv('data.csv')
-    return df1.to_json(orient='records')
 
 @app.route("/delete", methods=['POST'])
 def d():
